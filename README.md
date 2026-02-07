@@ -30,6 +30,8 @@ Warp Tunnels: Moving off the left/right edge of the map teleports the player to 
 
 🍎 Apple (Extra Life): Grants +1 Life.
 
+💩 Poop (Slow): Makes the player 25% slower for 10 seconds.
+
 ### Controls & Camera
 
 - Movement: Arrow Keys or W/A/S/D.

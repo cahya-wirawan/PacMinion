@@ -254,6 +254,7 @@
             <span style="color:#ffaa00">🥭 Freeze</span>
             <span style="color:#ff4444">🍓 Invincible</span>
             <span style="color:#ff0000">🍎 +1 Life</span>
+            <span style="color:#8b4513">💩 Slow</span>
         </div>
         <p style="color: #ffdb4d; font-size: 14px;">✨ Press <b>'C'</b>: Camera | <b>'M'</b>: New Maze | <b>'P'</b>:
             Switch Character ✨</p>
@@ -405,6 +406,7 @@
         const FRUIT_MANGO = 3;
         const FRUIT_STRAWBERRY = 4;
         const FRUIT_APPLE = 5; // New: Extra Life
+        const FRUIT_POOP = 6; // New: Poop
 
         // Default Map (Classic)
         const MAP_DEFAULT = [
@@ -490,6 +492,7 @@
         let mapWidth, mapHeight;
         let lastAiTriggerTime = 0;
         let wakaTimer = 0;
+        let playerSpeedMultiplier = 1.0;
 
         let activePowerUp = null;
         let powerUpEndTime = 0;
@@ -624,11 +627,12 @@
             validSpots.sort(() => Math.random() - 0.5);
 
             const spotTypeMap = {};
-            if (validSpots.length > 4) {
+            if (validSpots.length > 5) {
                 spotTypeMap[`${validSpots[0].x},${validSpots[0].z}`] = FRUIT_PINEAPPLE;
                 spotTypeMap[`${validSpots[1].x},${validSpots[1].z}`] = FRUIT_MANGO;
                 spotTypeMap[`${validSpots[2].x},${validSpots[2].z}`] = FRUIT_STRAWBERRY;
                 spotTypeMap[`${validSpots[3].x},${validSpots[3].z}`] = FRUIT_APPLE;
+                spotTypeMap[`${validSpots[4].x},${validSpots[4].z}`] = FRUIT_POOP;
             }
 
             for (let z = 0; z < mapHeight; z++) {
@@ -696,6 +700,17 @@
                 const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 1, 8), new THREE.MeshStandardMaterial({ color: 0x5d4037 }));
                 stem.position.y = 1.4;
                 mesh.add(body); mesh.add(stem);
+            } else if (type === FRUIT_POOP) {
+                mesh = new THREE.Group();
+                const mat = new THREE.MeshStandardMaterial({ color: 0x654321, roughness: 0.9 });
+                const base = new THREE.Mesh(new THREE.SphereGeometry(1.5, 8, 8), mat);
+                base.scale.set(1, 0.5, 1);
+                const mid = new THREE.Mesh(new THREE.SphereGeometry(1.0, 8, 8), mat);
+                mid.position.y = 0.8;
+                mid.scale.set(1, 0.5, 1);
+                const top = new THREE.Mesh(new THREE.SphereGeometry(0.5, 8, 8), mat);
+                top.position.y = 1.4;
+                mesh.add(base); mesh.add(mid); mesh.add(top);
             }
 
             // SCALING & POSITIONING
@@ -890,6 +905,14 @@
                 playSound('powerup');
                 showCommentary("Can't Touch This!", "STRAWBERRY POWER");
             }
+            else if (type === FRUIT_POOP) {
+                powerUpEndTime = now + 10000;
+                statusDiv.innerText = "💩 POOP (10s)";
+                statusDiv.style.color = "#8b4513";
+                playSound('splat');
+                playerSpeedMultiplier = 0.75;
+                showCommentary("Eww! You stepped in it! Slowed down.", "POOP");
+            }
         }
 
         function updatePowerUps() {
@@ -900,6 +923,7 @@
                 document.getElementById('powerup-status').style.display = 'none';
 
                 player.scale.set(1, 1, 1);
+                playerSpeedMultiplier = 1.0;
 
                 ghosts.forEach(g => {
                     if (g.userData.material) {
@@ -962,7 +986,7 @@
             const worldX = gridPos.x * TILE_SIZE;
             const worldZ = gridPos.z * TILE_SIZE;
 
-            const moveStep = SPEED * TILE_SIZE;
+            const moveStep = SPEED * playerSpeedMultiplier * TILE_SIZE;
             const dist = Math.sqrt(Math.pow(pPos.x - worldX, 2) + Math.pow(pPos.z - worldZ, 2));
 
             if (dist <= moveStep) {
@@ -1316,6 +1340,7 @@
 
             player.position.set(1 * TILE_SIZE, 0, 1 * TILE_SIZE);
             player.scale.set(1, 1, 1);
+            playerSpeedMultiplier = 1.0;
 
             player.traverse((child) => { if (child.isMesh && child.material) child.material.opacity = 1; });
 

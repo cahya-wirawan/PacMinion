@@ -276,13 +276,16 @@
             Switch Character ✨</p>
         <p>Use <b>Arrow Keys</b> or <b>WASD</b> to move.</p>
         <button id="start-btn">Play</button>
-        <a style="color: #ffdb4d; font-size: 14px; margin-top: 10px; display: inline-block;" href="https://github.com/cahya-wirawan/PacMinion" target="_blank">Source: https://github.com/cahya-wirawan/PacMinion</a>
+        <a style="color: #ffdb4d; font-size: 14px; margin-top: 10px; display: inline-block;"
+            href="https://github.com/cahya-wirawan/PacMinion" target="_blank">Source:
+            https://github.com/cahya-wirawan/PacMinion</a>
     </div>
 
     <div id="mobile-controls">
         <div id="joystick-stick"></div>
     </div>
-    <a style="color: #ffdb4d; font-size: 14px; margin-top: 10px; display: inline-block;" id="source-link" href="https://github.com/cahya-wirawan/PacMinion" target="_blank">https://github.com/cahya-wirawan/PacMinion</a>
+    <a style="color: #ffdb4d; font-size: 14px; margin-top: 10px; display: inline-block;" id="source-link"
+        href="https://github.com/cahya-wirawan/PacMinion" target="_blank">https://github.com/cahya-wirawan/PacMinion</a>
     <div id="game-container"></div>
 
     <script>
@@ -524,8 +527,20 @@
         let nextDir = { x: 0, z: 0 };
         let isMoving = false;
 
+        // --- RESPONSES DATA ---
+        let responses = null;
+        async function loadResponses() {
+            try {
+                const response = await fetch('responses.json');
+                if (response.ok) {
+                    responses = await response.json();
+                }
+            } catch (e) { console.error("Error loading responses", e); }
+        }
+
         // --- INITIALIZATION ---
         function init() {
+            loadResponses();
             const container = document.getElementById('game-container');
 
             // Setup Scene logic
@@ -1240,16 +1255,33 @@
 
         async function triggerGhostTaunt(ghostName) {
             showLoadingCommentary(`${ghostName} is Chasing!`);
-            const prompt = `You are ${ghostName}, a ghost in a Pacman maze game. You just started chasing the Minion player. Give a very short, funny, threatening taunt (max 8 words).`;
-            const response = await callGemini(prompt, "You are a video game character.");
-            showCommentary(response, `${ghostName} says:`);
+            if (apiKey) {
+                const prompt = `You are ${ghostName}, a ghost in a Pacman maze game. You just started chasing the Minion player. Give a very short, funny, threatening taunt (max 8 words).`;
+                const response = await callGemini(prompt, "You are a video game character.");
+                showCommentary(response, `${ghostName} says:`);
+            } else {
+                const list = responses ? responses.comments : [];
+                const response = list[Math.floor(Math.random() * list.length)];
+                showCommentary(response, `${ghostName} says:`);
+            }
         }
-
         async function triggerGameReview(isWin, finalScore) {
             showLoadingCommentary("Generating Performance Review...");
-            const outcome = isWin ? "won" : "died to a ghost";
-            const prompt = `You are a sarcastic Minion Manager. A minion just ${outcome} in the maze with a score of ${finalScore}. Give a short, sarcastic performance review (1 sentence).`;
-            const response = await callGemini(prompt, "You are a sarcastic boss.");
+            let response = "";
+            if (apiKey) {
+                const outcome = isWin ? "won" : "died to a ghost";
+                const prompt = `You are a sarcastic Minion Manager. A minion just ${outcome} in the maze with a score of ${finalScore}. Give a short, sarcastic performance review (1 sentence).`;
+                response = await callGemini(prompt, "You are a sarcastic boss.");
+            } else {
+                if (responses) {
+                    const list = isWin ? responses.reviews.win : responses.reviews.lost;
+                    response = list[Math.floor(Math.random() * list.length)];
+                } else {
+                    response = isWin
+                        ? "Well, you didn't completely embarrass yourself. You win... this time."
+                        : "Wow, you really let a ghost get the best of you. Impressive...ly bad.";
+                }
+            }
 
             const overlay = document.getElementById('message-overlay');
             const p = overlay.querySelector('p');

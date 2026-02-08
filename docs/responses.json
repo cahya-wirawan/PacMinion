@@ -1,0 +1,40 @@
+{
+    "reviews": {
+        "win": [
+            "Wow, you successfully walked in a circle and ate. It’s basically your resume in 8-bit.",
+            "I’m shocked you didn't try to peel the ghosts. Your restraint is almost professional.",
+            "Congratulations on winning a game where the primary objective is 'mindless consumption.' You were born for this.",
+            "You collected every banana. Somewhere, a grocery store is weeping, and I am mildly inconvenienced.",
+            "I see you used the Power Pellets. It’s the only time I’ve ever seen you show aggression toward anything other than a cupcake.",
+            "You survived! I already had the 'Help Wanted' sign printed, so thanks for wasting my ink.",
+            "Your pathfinding skills are slightly better than a roomba with a low battery. Don't let it go to your goggles.",
+            "You outran pink and blue pixels. I'll be sure to tell the Minion Council to give you a gold star and a pat on the head.",
+            "Great job winning the maze. Now if only you could find the exit to the supply closet without calling for a rescue team.",
+            "You’ve reached a high score! Too bad the exchange rate for 'Pac-Points' to actual currency is zero."
+        ],
+        "lost": [
+            "You got killed by a ghost named 'Blinky.' I hope you’re proud of being bullied by a pixelated bedsheet.",
+            "Congratulations! You are the only creature in history to starve to death in a room full of bananas.",
+            "I watched your 'strategy.' Apparently, your plan was to aggressively run directly into the enemy's mouth. Bold move.",
+            "The ghosts didn't even have to hunt you; you basically delivered yourself like a yellow, denim-clad Uber Eats order.",
+            "You spent five minutes staring at a wall while a ghost approached you at 1 mph. Your situational awareness is truly legendary.",
+            "I’ve seen moldy bread with better reflexes. At least the mold spreads; you just collapsed.",
+            "You died with a banana in your hand. Poetic, really. Also, a total waste of fruit.",
+            "If 'losing immediately' was an Olympic sport, you’d have the gold medal and a lucrative sponsorship deal.",
+            "I'd offer you a 'Game Over' screen, but that implies you actually started playing. That was more of a 'Brief Embarrassment.'",
+            "Don't worry, your sacrifice wasn't in vain. We’re using your goggles to replace a broken lightbulb in the basement."
+        ]
+    },
+    "comments": [
+        "Drop the banana or become the banana bread.",
+        "Your goggles won't protect you from me, yellow.",
+        "I hope you taste like lemon, not denim.",
+        "Blue looks better on me than you anyway.",
+        "Stop running! You're just tenderizing the meat.",
+        "One eye, two eyes, you’re still blind, Minion.",
+        "I’m the only thing scarier than Gru's temper.",
+        "A Power Pellet won't save your resume now.",
+        "Ready to be a ghost in denim overalls?",
+        "Running is exercise. You clearly hate exercise, Kevin."
+    ]
+}

@@ -6,6 +6,8 @@
 
 The player controls a Minion (or Pacman) to collect bananas while avoiding ghosts. The game features multiple power-ups, a life system, and warp tunnels.
 
+You can try the game at [https://cahya-wirawan.github.io/PacMinion](https://cahya-wirawan.github.io/PacMinion/)
+
 ## Features
 
 ### Gameplay

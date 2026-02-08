@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Minion Maze - Mobile Polish</title>
+    <title>3D PacMinion - Mobile Polish</title>
     <style>
         body {
             margin: 0;
@@ -227,6 +227,22 @@
                 opacity: .2;
             }
         }
+
+        #source-link {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 12px;
+            z-index: 15;
+            transition: color 0.2s;
+            pointer-events: auto;
+        }
+
+        #source-link:hover {
+            color: #ffdb4d;
+        }
     </style>
     <!-- Load Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -246,7 +262,7 @@
     </div>
 
     <div id="message-overlay">
-        <h1>Minion Maze</h1>
+        <h1>PacMinion</h1>
         <p>Collect <b>BANANAS</b>. Avoid the ghosts.</p>
         <p>Use the <b>Purple Tunnels</b> to warp across the map!</p>
         <div class="legend">
@@ -259,17 +275,19 @@
         <p style="color: #ffdb4d; font-size: 14px;">✨ Press <b>'C'</b>: Camera | <b>'M'</b>: New Maze | <b>'P'</b>:
             Switch Character ✨</p>
         <p>Use <b>Arrow Keys</b> or <b>WASD</b> to move.</p>
-        <button id="start-btn">PLAY</button>
+        <button id="start-btn">PLAY Me</button>
+        <a style="color: #ffdb4d; font-size: 14px; margin-top: 10px; display: inline-block;" href="https://github.com/cahya-wirawan/PacMinion" target="_blank">Source: https://github.com/cahya-wirawan/PacMinion</a>
     </div>
 
     <div id="mobile-controls">
         <div id="joystick-stick"></div>
     </div>
+    <a style="color: #ffdb4d; font-size: 14px; margin-top: 10px; display: inline-block;" id="source-link" href="https://github.com/cahya-wirawan/PacMinion" target="_blank">https://github.com/cahya-wirawan/PacMinion</a>
     <div id="game-container"></div>
 
     <script>
         /**
-         * 3D MINION MAZE - Final Feature Set
+         * 3D PacMinion - Final Feature Set
          * Powered by Three.js & Gemini API
          */
 
